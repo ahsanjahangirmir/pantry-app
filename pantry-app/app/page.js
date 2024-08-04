@@ -87,7 +87,7 @@ export default function Home() {
     <Box width='100vw' height='100vh' display='flex' justifyContent='center' alignItems='center' gap={2}> 
     
       <Modal open={open} onClose={handleClose}>
-        <Box position='absolute' top='50%' left='50%' sx{...{transform:'(-50%, -50%)'}} width={400} bgcolor={white} border={'2px solid #000'} boxShadow={24} gap={2} p={4} display={'flex'} flexDirection={'column'}>
+        <Box position='absolute' top='50%' left='50%' sx{...{transform:'(-50%, -50%)'}} width={400} bgcolor={'white'} border={'2px solid #000'} boxShadow={24} gap={2} p={4} display={'flex'} flexDirection={'column'}>
           <Typography variant='h6'> Add Item </Typography>
           <Stack width={'100%'} direction={'row'} spacing={2}>
             <TextField variant="outlined" fullWidth value={item} onChange={(e) => {setItemName(e.target.value)}}>
