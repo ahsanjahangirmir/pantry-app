@@ -1,0 +1,4 @@
+1. Using firebase and MUI so del everything in globals.css + rem page.module.css 
+2. main file is page.js which is displaying the app frontend. remove main template from page.js 
+
+
