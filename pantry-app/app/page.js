@@ -4,6 +4,19 @@ import { useState, useEffect } from "react";
 import { firestore } from "@/firebase";
 import { Box, Button, Modal, Stack, TextField, Typography } from "@mui/material";
 import { collection, getDoc, getDocs, query, setDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+function Header() {
+  return (
+    <Box component="header" width="100%" bgcolor="#ADD8E6" p={2} display="flex" alignItems="center" position={'absolute'} top={'0%'}>
+      <Typography variant="h2" color="#333">
+        Pantry Tracker
+      </Typography>
+    </Box>
+  );
+}
 
 export default function Home() {
 
@@ -127,11 +140,11 @@ export default function Home() {
     
     <Box width='100vw' height='100vh' display='flex' justifyContent='center' alignItems='center' gap={2} flexDirection={'column'}> 
     
-      <Typography variant="h1"> Pantry Tracker </Typography>
+      <Header/>
     
       <Modal open={open} onClose={handleClose}>
-        <Box position='absolute' top='50%' sx={{transform:'(-50%, -50%),'}} left='50%' width={400} bgcolor={'white'} border={'2px solid #000'} boxShadow={24} gap={2} p={4} display={'flex'} flexDirection={'column'}>
-          <Typography variant='h6'> Add Item </Typography>
+        <Box position='absolute' top='50%' sx={{transform:'translate(-50%, -50%)'}} left='50%' width={400} bgcolor={'white'} border={'2px solid #000'} boxShadow={24} gap={2} p={4} display={'flex'} flexDirection={'column'}>
+          <Typography variant='h6' color={'black'} alignItems={'center'} justifyContent={'center'} display={'flex'}> Add Item </Typography>
           <Stack width={'100%'} direction={'row'} spacing={2}>
             <TextField variant="outlined" fullWidth value={item} onChange={(e) => {setItemName(e.target.value)}}/>
             <Button variant="outlined" onClick={() => {addItem(item); setItemName(''); handleClose();}}>Add</Button>
@@ -139,28 +152,31 @@ export default function Home() {
         </Box>
       </Modal>
 
-      <Button variant="outlined" onClick={handleOpen}>Add Item</Button>
+      <Button variant="contained" onClick={handleOpen}>Add Item</Button>
 
       <Box border={'2px solid #333'}>
-        <Box bgcolor={'#ADD8E6'} width={"800px"} height={"100px"} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+        <Box bgcolor={'#ADD8E6'} width={"60vw"} height={"100px"} display={'flex'} alignItems={'center'} justifyContent={'center'}>
           <Typography variant="h3" color={"#333"}> Inventory </Typography>
 
         </Box>
       </Box>
-      <Stack direction={'column'} spacing={2} overflow={'auto'} width={'800px'} height={'300px'}>
+      <Stack direction={'column'} overflow={'auto'} width={'60vw'} height={'300px'}>
       {
         inv.map(({name, quantity}) => ( 
-          <Stack direction={'row'} spacing={2} key={name} width={'100%'} minHeight={'150px'} display={'flex'} alignItems={'center'} justifyContent={'center'} bgcolor={'#000'} padding={5}>
+          <Stack direction={'row'} spacing={2} key={name} width={'100%'} minHeight={'150px'} display={'flex'} alignItems={'center'} justifyContent={'center'} bgcolor={'black'} padding={5}>
             <Typography variant="h6" color={'#fff'} textAlign={'center'}> {name.charAt(0).toUpperCase() + name.slice(1)} </Typography>
             <Button variant="outlined" size="small" onClick={() => decrement(name)}>-</Button>
             <Typography variant="h6"> {quantity} </Typography>
             <Button variant="outlined" size="small" onClick={() => increment(name)}>+</Button>
-            <Button variant="contained" onClick={() => removeItem(name)}> Remove </Button>
+            <Tooltip title="Remove">
+              <IconButton onClick={() => removeItem(name)}>
+                <DeleteIcon sx={{ color: 'white' }} />
+              </IconButton>
+            </Tooltip>
           </Stack>
         ))
       }
       </Stack>
-
     </Box>
   );
 }
